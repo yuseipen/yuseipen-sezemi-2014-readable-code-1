@@ -16,8 +16,10 @@ public class displayName {
 			BufferedReader bf = new BufferedReader(new FileReader(f));
 			
 			//読み込んだレシピ名の出力
-			String recipe_name = bf.readLine();
-			System.out.println(recipe_name);
+			String recipe_name;
+			while((recipe_name = bf.readLine()) != null){
+				System.out.println(recipe_name);
+			}
 			bf.close();
 		}catch(FileNotFoundException e){
 			System.err.println("ファイルが見つかりません");
