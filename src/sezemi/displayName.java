@@ -1,37 +1,67 @@
 package sezemi;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-public class displayName {
+import fileIO.LoadRecipeFile;
+
+public class displayName { 
+	
+	final static String SELECT_RECIPE_ALL = "ALL";
+	final static String SELECT_RECIPE_BY_ID = "ID";
+	
 
 	public static void main(String[] args) {
 		//recipe-data.txtを一行ずつ読み込み、その中のレシピの名前を標準出力する
-		try{
-			//ファイルの読み込み
-			File f = new File("recipe-data.txt");
-			BufferedReader bf = new BufferedReader(new FileReader(f));
-			
-			//読み込んだファイルを一行ずつ読み込んで内容がなくなるまで出力。
-			String recipe_name;
-			while(true){
-				recipe_name = bf.readLine();
+		//LoadRecipeFile _lrf = new LoadRecipeFile("recipe-data.txt");
+		
+		ArrayList<String> recipeDataArray = new ArrayList<String>();
+		recipeDataArray = LoadRecipeFile.load("recipe-data.txt");
+		
+		if(args.length == 0){
+			printRecipeData(recipeDataArray, SELECT_RECIPE_ALL, null);
+		}else{
+			printRecipeData(recipeDataArray, SELECT_RECIPE_BY_ID, args);
+		}
+		
+		
+	}
+	
+	static void printRecipeData(ArrayList<String> _array, String _type, String[] _str_id) {
+		
+		int i;
+		int len;
+		
+		switch(_type){
+			case SELECT_RECIPE_ALL :
+				//すべてのIDのレシピを出力
+				len = _array.size();
 				
-				//次の行がない場合には脱出
-				if(recipe_name == null){
-					break;
+				for(i=0; i<len; i++) {
+					System.out.println(Integer.valueOf(i+1) + ": "  + _array.get(i));
 				}
-				System.out.println(recipe_name);
-			}
-			bf.close();
-		}catch(FileNotFoundException e){
-			System.err.println("ファイルが見つかりません");
-		}catch(IOException e){
-			System.err.println("入出力エラーです");
+			break;
+			case SELECT_RECIPE_BY_ID :
+				//第三引数で指定されたIDのレシピのみを出力
+				//存在するレシピIDの最大数
+				len = _str_id.length;
+				int max_recipe_id = _array.size();
+				
+				for(i=0; i<len; i++) { 
+					//_idは文字列型なので、intに変換
+					int _intid = Integer.valueOf(_str_id[i]);
+					
+					//対象となるidがない場合は何も出力しない
+					if(_intid <= 0 || _intid > max_recipe_id) return ;
+					
+					//該当するレシピを出力
+					System.out.println(_intid + ": " + _array.get(_intid-1));
+				}
+				
+				
+			break;
 		}
 	}
+	
 
 }

@@ -1,0 +1,30 @@
+memo
+
+メモ1
+https://github.com/ishikawakenji/yuseipen-sezemi-2014-readable-code-1/blob/master/src/sezemi/displayName.java
+
+try{
+
+}catch(FileNotFoundException e){
+	System.err.println("ファイルが見つかりません");
+}catch(IOException e){
+	System.err.println("入出力エラーです");
+}
+
+
+good:エラー内容ごとにメッセージを出力してくれるので、デバッグがしやすい、分かりやすい。
+
+
+メモ2
+https://github.com/ishikawakenji/yuseipen-sezemi-2014-readable-code-1/blob/dae2169f47554291299a001a755a675f85e0a221/src/fileIO/LoadRecipeFile.java
+
+//すぐに出力せずに、配列として保持し呼び出し側のクラスに渡すように変更
+//レシピをIDなどと紐付けて管理するため
+//change ishikawakenji//////////////
+recipeDataArray.add(recipe_name);
+////////////////////////////////////
+//System.out.println(recipe_name);
+////////////////////////////////////
+
+
+変更の内容が分かるように注釈をつける
