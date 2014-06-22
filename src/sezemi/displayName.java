@@ -9,15 +9,21 @@ import java.io.IOException;
 public class displayName {
 
 	public static void main(String[] args) {
-		//recipe-data.txtを読み込み、その中のレシピの名前を標準出力する
+		//recipe-data.txtを一行ずつ読み込み、その中のレシピの名前を標準出力する
 		try{
 			//ファイルの読み込み
 			File f = new File("recipe-data.txt");
 			BufferedReader bf = new BufferedReader(new FileReader(f));
 			
-			//読み込んだレシピ名の出力
+			//読み込んだファイルを一行ずつ読み込んで内容がなくなるまで出力。
 			String recipe_name;
-			while((recipe_name = bf.readLine()) != null){
+			while(true){
+				recipe_name = bf.readLine();
+				
+				//次の行がない場合には脱出
+				if(recipe_name == null){
+					break;
+				}
 				System.out.println(recipe_name);
 			}
 			bf.close();
